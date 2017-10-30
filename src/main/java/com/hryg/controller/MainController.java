@@ -93,4 +93,15 @@ public class MainController {
         return "redirect:/admin/users";
     }
 
+    /**
+     * 删除用户
+     * @return
+     */
+    @RequestMapping(value = "/admin/users/delete/{id}", method = RequestMethod.GET)
+    public String deleteUser(@PathVariable("id") Integer userId) {
+        userRepository.delete(userId);
+        userRepository.flush();
+        return "redirect:/admin/users";
+    }
+
 }
