@@ -2,11 +2,11 @@ package com.hryg.controller;
 
 import com.hryg.model.UserEntity;
 import com.hryg.repository.UserRepository;
-import com.sun.tracing.dtrace.ModuleAttributes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -57,6 +57,17 @@ public class MainController {
     public String addUser(@ModelAttribute("user") UserEntity userEntity) {
         userRepository.saveAndFlush(userEntity);
         return "redirect:/admin/users";
+    }
+
+    /**
+     * 查看用户详情
+     * @return
+     */
+    @RequestMapping(value = "/admin/users/show/{id}", method = RequestMethod.GET)
+    public String showUser(@PathVariable("id") Integer userId, ModelMap modelMap) {
+        UserEntity userEntity = userRepository.findOne(userId);
+        modelMap.addAttribute("user", userEntity);
+        return "admin/userDetail";
     }
 
 }
