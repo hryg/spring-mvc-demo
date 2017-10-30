@@ -70,4 +70,27 @@ public class MainController {
         return "admin/userDetail";
     }
 
+    /**
+     * 更新用户页面
+     * @return
+     */
+    @RequestMapping(value = "/admin/users/update/{id}", method = RequestMethod.GET)
+    public String updateUserPage(@PathVariable("id") Integer userId, ModelMap modelMap) {
+        UserEntity userEntity = userRepository.findOne(userId);
+        modelMap.addAttribute("user", userEntity);
+        return "admin/updateUser";
+    }
+
+    /**
+     * 更新用户 POST
+     * @return
+     */
+    @RequestMapping(value = "/admin/users/update", method = RequestMethod.POST)
+    public String updateUser(@ModelAttribute("user") UserEntity userEntity) {
+        userRepository.updateUser(userEntity.getNickname(), userEntity.getFirstName(),
+                userEntity.getLastName(), userEntity.getPassword(), userEntity.getId());
+        userRepository.flush();
+        return "redirect:/admin/users";
+    }
+
 }
