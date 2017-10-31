@@ -13,7 +13,7 @@
             <!--数据库用户名-->
             <property name="hibernate.connection.username" value="root"/>
             <!--数据库密码-->
-            <property name="hibernate.connection.password" value="hryg.123"/>
+            <property name="hibernate.connection.password" value="root"/>
             <!--显示SQL语句，并在显示时格式化-->
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
