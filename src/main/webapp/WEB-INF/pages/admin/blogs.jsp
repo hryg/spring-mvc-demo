@@ -29,11 +29,11 @@
 <div class="container">
     <h1>SpringMVC 博客系统-博客管理</h1>
     <hr/>
-    <h3>所有博客<a href="/admin/users/add" type="button" class="btn btn-primary btn-sm">添加</a> </h3>
+    <h3>所有博客<a href="/admin/blogs/add" type="button" class="btn btn-primary btn-sm">添加</a> </h3>
     <!--如果用户列表为空-->
     <c:if test="${empty blogList}">
         <div class="alert alert-warning" role="alert">
-            <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>Blog表为空！<a href="/admin/users/add" type="button" class="btn btn-primary btn-sm">添加</a>
+            <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>Blog表为空！<a href="/admin/blogs/add" type="button" class="btn btn-primary btn-sm">添加</a>
         </div>
     </c:if>
     <!--如果用户列表非空-->

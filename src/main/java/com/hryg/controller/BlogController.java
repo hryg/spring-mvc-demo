@@ -1,7 +1,9 @@
 package com.hryg.controller;
 
 import com.hryg.model.BlogEntity;
+import com.hryg.model.UserEntity;
 import com.hryg.repository.BlogRepository;
+import com.hryg.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -19,6 +21,9 @@ public class BlogController {
     @Autowired
     private BlogRepository blogRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     /**
      * 显示所有博客列表
      * @param modelMap
@@ -29,6 +34,18 @@ public class BlogController {
         List<BlogEntity> blogList = blogRepository.findAll();
         modelMap.addAttribute("blogList", blogList);
         return "admin/blogs";
+    }
+
+    /**
+     * 添加博客页面
+     * @param modelMap
+     * @return
+     */
+    @GetMapping(value = "/blogs/add")
+    public String addBlog(ModelMap modelMap) {
+        List<UserEntity> userList = userRepository.findAll();
+        modelMap.addAttribute("userList", userList);
+        return "admin/addBlog";
     }
 
 }
