@@ -96,4 +96,16 @@ public class BlogController {
         return "redirect:/admin/blogs";
     }
 
+    /**
+     * 删除博客
+     * @param blogId
+     * @return
+     */
+    @GetMapping(value = "/blogs/delete/{id}")
+    public String deleteBlog(@PathVariable("id") Integer blogId) {
+        blogRepository.delete(blogId);
+        blogRepository.flush();
+        return "redirect:/admin/blogs";
+    }
+
 }
