@@ -7,10 +7,7 @@ import com.hryg.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.Mapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -42,10 +39,61 @@ public class BlogController {
      * @return
      */
     @GetMapping(value = "/blogs/add")
-    public String addBlog(ModelMap modelMap) {
+    public String addBlogPage(ModelMap modelMap) {
         List<UserEntity> userList = userRepository.findAll();
         modelMap.addAttribute("userList", userList);
         return "admin/addBlog";
+    }
+
+    /**
+     * 添加博客
+     * @return
+     */
+    @PostMapping(value = "/blogs/add")
+    public String addBlog(@ModelAttribute("blog") BlogEntity blogEntity) {
+        blogRepository.saveAndFlush(blogEntity);
+        return "redirect:/admin/blogs";
+    }
+
+    /**
+     * 显示博客详情
+     * @param blogId
+     * @param modelMap
+     * @return
+     */
+    @GetMapping(value = "/blogs/show/{id}")
+    public String showBlog(@PathVariable("id") Integer blogId, ModelMap modelMap) {
+        BlogEntity blog = blogRepository.findOne(blogId);
+        modelMap.addAttribute("blog", blog);
+        return "admin/blogDetail";
+    }
+
+    /**
+     * 更新博客的页面
+     * @param blogId
+     * @param modelMap
+     * @return
+     */
+    @GetMapping(value = "/blogs/update/{id}")
+    public String updateBlogPage(@PathVariable("id") Integer blogId, ModelMap modelMap) {
+        List<UserEntity> userList = userRepository.findAll();
+        modelMap.addAttribute("userList", userList);
+        BlogEntity blogEntity = blogRepository.findOne(blogId);
+        modelMap.addAttribute("blog", blogEntity);
+        return "admin/updateBlog";
+    }
+
+    /**
+     * 更新博客
+     * @param blogEntity
+     * @return
+     */
+    @PostMapping(value = "/blogs/update")
+    public String updateBlog(@ModelAttribute("blog") BlogEntity blogEntity) {
+        blogRepository.updateUser(blogEntity.getTitle(), blogEntity.getUserByUserId().getId(), blogEntity.getContent(),
+                blogEntity.getPubDate(), blogEntity.getId());
+        blogRepository.flush();
+        return "redirect:/admin/blogs";
     }
 
 }
